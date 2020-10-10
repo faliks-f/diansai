@@ -9,15 +9,30 @@ using namespace cv;
 using namespace std;
 
 void QuestionOne::totalSolve(cv::Mat img) {
+
+    //blur(img, img, Size(7, 7));
     color = getColor(img);
-    Mat binaryImg = Mat(img.rows, img.cols, CV_8U);
-    //cvtColor(img, img, COLOR_RGB2GRAY);
-    blur(img, img, Size(7, 7));
     Vec3b getColor = img.at<Vec3b>(img.cols / 2, img.rows / 2);
-    cout << "(" << (int) getColor[0] << ", " << (int) getColor[1] << ", " << (int) getColor[2] << ")" << endl;
+    cout << ((color == Color::RED)? "R":color == Color::GREEN?"G": color == Color::BLUE?"B":"None");
+    cout << "  (" << (int) getColor[0] << ", " << (int) getColor[1] << ", " << (int) getColor[2] << ")" << endl;
     circle(img, Point(img.cols / 2, img.rows / 2), 2, Scalar(0, 0, 0), -1);
     imshow("a", img);
-    getPureColorImg(img, binaryImg, 1);
+    if (color == Color::NONE)
+    {
+        cout << "No Color!" << endl;
+        return;
+    }
+    Mat binaryImg = Mat(img.rows, img.cols, CV_8U);
+    //cvtColor(img, img, COLOR_RGB2GRAY);
+
+
+
+    if (color == Color::BLUE)
+        getPureColorImg(img, binaryImg, 0);
+    else if (color == Color::GREEN)
+        getPureColorImg(img, binaryImg, 1);
+    else
+        getPureColorImg(img, binaryImg, 2);
     imshow("b", binaryImg);
     //cout << color << endl;
 }
@@ -25,20 +40,22 @@ void QuestionOne::totalSolve(cv::Mat img) {
 QuestionOne::Color QuestionOne::getColor(cv::Mat img) {
     int cols = img.cols, rows = img.rows;
     int sumR = 0, sumG = 0, sumB = 0;
-    for (int i = cols / 2 - 3; i < cols / 2 + 3; ++i) {
-        for (int j = rows / 2 - 3; j < rows / 2 + 3; ++j) {
+    for (int i = cols / 2 - 3; i <= cols / 2 + 3; ++i) {
+        for (int j = rows / 2 - 3; j <= rows / 2 + 3; ++j) {
             Vec3b getColor = img.at<Vec3b>(i, j);
             sumB += getColor[0];
             sumG += getColor[1];
             sumR += getColor[2];
         }
     }
-    if (sumR > (sumB + sumG))
+    if (sumR > sumB && sumR > sumG)
         return Color::RED;
-    else if (sumG > (sumR + sumB))
+    if (sumG > sumR && sumG > sumB)
         return Color::GREEN;
-    else
+    if (sumB > sumR && sumB > sumG)
         return Color::BLUE;
+    return Color::NONE;
+
 }
 
 void QuestionOne::getPureColorImg(cv::Mat &imgIn, cv::Mat &imgOut, int colorIndex) {

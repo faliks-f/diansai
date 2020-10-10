@@ -15,7 +15,7 @@ static cv::Scalar redHigh = cv::Scalar(128, 128, 255);
 class QuestionOne {
 public:
     enum Color {
-        RED = 0, GREEN = 1, BLUE = 2
+        RED = 0, GREEN = 1, BLUE = 2, NONE = 3
     };
 
     QuestionOne() {}

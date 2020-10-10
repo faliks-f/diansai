@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(BallCtlUpperTest)                                # project name
+project(ElectronicComp)                                # project name
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # define variables
@@ -26,6 +26,6 @@ link_directories("/usr/local/lib")   # libraray search path
 
 # 指定从哪些源代码文件中生成exe或lib
 # add_library(target source1, source2...)                 # compiler sources to a library named target, not a exe
-add_executable(diansai ${SOURCE_FILES})         # compiler sources to a exe named target, not a library
+add_executable(ElectronicComp ${SOURCE_FILES})         # compiler sources to a exe named target, not a library
 
-target_link_libraries(diansai ${OPENCV_LIB})    # link library to specified target. must after define target opencv_adaboost
+target_link_libraries(ElectronicComp ${OPENCV_LIB})    # link library to specified target. must after define target opencv_adaboost

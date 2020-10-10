@@ -20,11 +20,9 @@ int main(int argc, char **argv) {
     VideoCapture capture(0);
     Mat img;
     capture >> img;
-    imshow("a", img);
-    waitKey(0);
     while (1) {
-        int table = getQuestion();
-        table = 1;
+        //int table = getQuestion();
+        int table = 1;
         if (table)
             isStartWork = true;
         while (isStartWork) {
@@ -33,9 +31,9 @@ int main(int argc, char **argv) {
                 case 1:
                     QuestionOne questionOne;
                     questionOne.totalSolve(img);
-
+                    break;
             }
-            waitKey(0);
+            waitKey(1);
         }
     }
 

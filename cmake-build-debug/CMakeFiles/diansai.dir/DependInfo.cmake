@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/faliks/CLionProjects/diansai/QuestionOne.cpp" "/home/faliks/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/QuestionOne.cpp.o"
-  "/home/faliks/CLionProjects/diansai/Uart.cpp" "/home/faliks/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/Uart.cpp.o"
-  "/home/faliks/CLionProjects/diansai/main.cpp" "/home/faliks/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/main.cpp.o"
+  "/home/caesar/CLionProjects/diansai/QuestionOne.cpp" "/home/caesar/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/QuestionOne.cpp.o"
+  "/home/caesar/CLionProjects/diansai/Uart.cpp" "/home/caesar/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/Uart.cpp.o"
+  "/home/caesar/CLionProjects/diansai/main.cpp" "/home/caesar/CLionProjects/diansai/cmake-build-debug/CMakeFiles/diansai.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

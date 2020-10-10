@@ -8,100 +8,100 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/faliks/CLionProjects/diansai/cmake-build-debug"/>
+				<Option working_dir="/home/caesar/CLionProjects/diansai/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/faliks/CLionProjects/diansai/cmake-build-debug"/>
+				<Option working_dir="/home/caesar/CLionProjects/diansai/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/faliks/CLionProjects/diansai/cmake-build-debug"/>
+				<Option working_dir="/home/caesar/CLionProjects/diansai/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diansai">
-				<Option output="/home/faliks/CLionProjects/diansai/cmake-build-debug/diansai" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/faliks/CLionProjects/diansai/cmake-build-debug"/>
+				<Option output="/home/caesar/CLionProjects/diansai/cmake-build-debug/diansai" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/caesar/CLionProjects/diansai/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include/opencv4"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/8"/>
+					<Add directory="/usr/include/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 diansai"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 diansai"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diansai/fast">
-				<Option output="/home/faliks/CLionProjects/diansai/cmake-build-debug/diansai" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/faliks/CLionProjects/diansai/cmake-build-debug"/>
+				<Option output="/home/caesar/CLionProjects/diansai/cmake-build-debug/diansai" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/caesar/CLionProjects/diansai/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/usr/local/include/opencv4"/>
-					<Add directory="/usr/include/c++/7"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
-					<Add directory="/usr/include/c++/7/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/include/c++/8"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/8"/>
+					<Add directory="/usr/include/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 diansai/fast"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/faliks/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 diansai/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/caesar/CLionProjects/diansai/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/faliks/CLionProjects/diansai/QuestionOne.cpp">
+		<Unit filename="/home/caesar/CLionProjects/diansai/QuestionOne.cpp">
 			<Option target="diansai"/>
 		</Unit>
-		<Unit filename="/home/faliks/CLionProjects/diansai/QuestionOne.h">
+		<Unit filename="/home/caesar/CLionProjects/diansai/QuestionOne.h">
 			<Option target="diansai"/>
 		</Unit>
-		<Unit filename="/home/faliks/CLionProjects/diansai/Uart.cpp">
+		<Unit filename="/home/caesar/CLionProjects/diansai/Uart.cpp">
 			<Option target="diansai"/>
 		</Unit>
-		<Unit filename="/home/faliks/CLionProjects/diansai/Uart.h">
+		<Unit filename="/home/caesar/CLionProjects/diansai/Uart.h">
 			<Option target="diansai"/>
 		</Unit>
-		<Unit filename="/home/faliks/CLionProjects/diansai/main.cpp">
+		<Unit filename="/home/caesar/CLionProjects/diansai/main.cpp">
 			<Option target="diansai"/>
 		</Unit>
-		<Unit filename="/home/faliks/CLionProjects/diansai/CMakeLists.txt">
+		<Unit filename="/home/caesar/CLionProjects/diansai/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

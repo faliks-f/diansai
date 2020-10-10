@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     //}
     //selfInspection();
 
-    VideoCapture capture(0);
+    VideoCapture capture(-1);
     Mat img;
     capture >> img;
     while (1) {

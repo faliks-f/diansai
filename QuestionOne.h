@@ -20,7 +20,7 @@ public:
     void totalSolve(cv::Mat img);
 
     Color getColor(cv::Mat img);
-
+    int getThreshold(cv::Mat img);
 private:
 
     Color color;

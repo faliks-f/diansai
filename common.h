@@ -1,0 +1,1 @@
+#define ALLOW_REDEFINE extern __attribute__((weak))

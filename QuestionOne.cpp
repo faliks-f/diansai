@@ -4,37 +4,43 @@
 
 #include "QuestionOne.h"
 #include "iostream"
+#include "Blob.h"
+#include "algorithm"
 
 using namespace cv;
 using namespace std;
 
 void QuestionOne::totalSolve(cv::Mat img) {
-
-    //blur(img, img, Size(7, 7));
+    //直方图均衡化
+    equalizeColor(img);
     color = getColor(img);
+    //显示文字信息
     Vec3b getColor = img.at<Vec3b>(img.cols / 2, img.rows / 2);
-    cout << ((color == Color::RED)? "R":color == Color::GREEN?"G": color == Color::BLUE?"B":"None");
+    cout << ((color == Color::RED) ? "R" : color == Color::GREEN ? "G" : color == Color::BLUE ? "B" : "None");
     cout << "  (" << (int) getColor[0] << ", " << (int) getColor[1] << ", " << (int) getColor[2] << ")" << endl;
     circle(img, Point(img.cols / 2, img.rows / 2), 2, Scalar(0, 0, 0), -1);
-    imshow("a", img);
-    if (color == Color::NONE)
-    {
+    if (color == Color::NONE) {
         cout << "No Color!" << endl;
         return;
     }
+
+    //blur(img, img, Size(7, 7));
+    //二值化
     Mat binaryImg = Mat(img.rows, img.cols, CV_8U);
-    //cvtColor(img, img, COLOR_RGB2GRAY);
-
-
-
     if (color == Color::BLUE)
         getPureColorImg(img, binaryImg, 0);
     else if (color == Color::GREEN)
         getPureColorImg(img, binaryImg, 1);
     else
         getPureColorImg(img, binaryImg, 2);
-    imshow("b", binaryImg);
-    //cout << color << endl;
+//    medianBlur(binaryImg, binaryImg, 5);
+
+    getRidOfConor(binaryImg);
+    getRidOfOthers(binaryImg);
+
+    imshow("original", img);
+    imshow("binary", binaryImg);
+
 }
 
 QuestionOne::Color QuestionOne::getColor(cv::Mat img) {
@@ -98,5 +104,47 @@ void QuestionOne::getPureColorImg(cv::Mat &imgIn, cv::Mat &imgOut, int colorInde
             }
         }
     }
+}
+
+void QuestionOne::equalizeColor(cv::Mat img) {
+    Mat ycrcb;
+    cvtColor(img, ycrcb, COLOR_BGR2YCrCb);
+    vector<Mat> channels;
+    split(ycrcb, channels);
+    equalizeHist(channels[0], channels[0]);
+    merge(channels, ycrcb);
+    cvtColor(ycrcb, img, COLOR_YCrCb2BGR);
+}
+
+void QuestionOne::getRidOfConor(cv::Mat img) {
+    int row = img.rows, col = img.cols;
+    for (int j = 0; j < row; ++j) {
+        if (j < row / 4 || j > row * 3 / 4) {
+            for (int i = 0; i < col; ++i) {
+                *(img.data + img.step[0] * j + i) = 0;
+            }
+        } else {
+            for (int i = 0; i < col; ++i) {
+                if (i < col / 4 || i > col * 3 / 4)
+                    *(img.data + img.step[0] * j + i) = 0;
+            }
+        }
+    }
+}
+
+void QuestionOne::getRidOfOthers(cv::Mat img) {
+    vector<Blob> blob = findBlob(img);
+    Blob maxBlob(Point(0, 0));
+    //cout << blob.size() << endl;
+    for (auto x:blob) {
+        //printf("( %d, %d, %d, %d)   ", x.left, x.right, x.down, x.up);
+        if (x.area() < maxBlob.area()) {
+            turnBlack(img, x);
+        } else {
+            turnBlack(img, maxBlob);
+            maxBlob = x;
+        }
+    }
+    //cout << endl;
 }
 

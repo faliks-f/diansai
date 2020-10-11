@@ -7,6 +7,7 @@
 
 #include "opencv4/opencv2/opencv.hpp"
 #include "opencv4/opencv2/core.hpp"
+#include "Blob.h"
 
 static cv::Scalar redLow = cv::Scalar(0, 0, 100);
 static cv::Scalar redHigh = cv::Scalar(128, 128, 255);
@@ -28,6 +29,11 @@ public:
 
     Color getColor(cv::Mat img);
 
+    void equalizeColor(cv::Mat img);
+
+    void getRidOfConor(cv::Mat img);
+
+    void getRidOfOthers(cv::Mat img);
 private:
 
     Color color;

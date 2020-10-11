@@ -11,8 +11,6 @@ using namespace cv;
 using namespace std;
 
 void QuestionOne::totalSolve(cv::Mat img) {
-    //直方图均衡化
-    equalizeColor(img);
     color = getColor(img);
     //显示文字信息
     Vec3b getColor = img.at<Vec3b>(img.cols / 2, img.rows / 2);
@@ -44,24 +42,38 @@ void QuestionOne::totalSolve(cv::Mat img) {
 }
 
 QuestionOne::Color QuestionOne::getColor(cv::Mat img) {
-    int cols = img.cols, rows = img.rows;
-    int sumR = 0, sumG = 0, sumB = 0;
-    for (int i = cols / 2 - 3; i <= cols / 2 + 3; ++i) {
-        for (int j = rows / 2 - 3; j <= rows / 2 + 3; ++j) {
-            Vec3b getColor = img.at<Vec3b>(i, j);
-            sumB += getColor[0];
-            sumG += getColor[1];
-            sumR += getColor[2];
+    Mat hsvImg;
+    cvtColor(img, hsvImg, COLOR_BGR2HSV);
+    vector<Mat> hsvSplit;
+    split(hsvImg, hsvSplit);
+    int countR = 0, countG = 0, countB = 0;
+    for (int i = img.cols / 2 - 3; i < img.cols / 2 + 4; ++i) {
+        for (int j = img.rows / 2 - 3; j < img.rows / 2 + 4; ++j) {
+            cout << (int)hsvSplit[0].at<uchar>(i, j) << endl;
+            switch (calDistance(hsvSplit[0], i, j)) {
+                case 1:
+                    ++countR;
+                    cout << "R" << " ";
+                    break;
+                case 2:
+                    ++countG;
+                    cout << "G" << " ";
+                    break;
+                case 3:
+                    ++countB;
+                    cout << "B" << " ";
+                    break;
+            }
         }
     }
-    if (sumR > sumB && sumR > sumG)
+    cout << endl;
+    if (countR > countG && countR > countB)
         return Color::RED;
-    if (sumG > sumR && sumG > sumB)
+    if (countG > countR && countG > countB)
         return Color::GREEN;
-    if (sumB > sumR && sumB > sumG)
+    if (countB > countG && countB > countR)
         return Color::BLUE;
     return Color::NONE;
-
 }
 
 void QuestionOne::getPureColorImg(cv::Mat &imgIn, cv::Mat &imgOut, int colorIndex) {
@@ -106,16 +118,6 @@ void QuestionOne::getPureColorImg(cv::Mat &imgIn, cv::Mat &imgOut, int colorInde
     }
 }
 
-void QuestionOne::equalizeColor(cv::Mat img) {
-    Mat ycrcb;
-    cvtColor(img, ycrcb, COLOR_BGR2YCrCb);
-    vector<Mat> channels;
-    split(ycrcb, channels);
-    equalizeHist(channels[0], channels[0]);
-    merge(channels, ycrcb);
-    cvtColor(ycrcb, img, COLOR_YCrCb2BGR);
-}
-
 void QuestionOne::getRidOfConor(cv::Mat img) {
     int row = img.rows, col = img.cols;
     for (int j = 0; j < row; ++j) {
@@ -146,5 +148,19 @@ void QuestionOne::getRidOfOthers(cv::Mat img) {
         }
     }
     //cout << endl;
+}
+
+int QuestionOne::calDistance(cv::Mat img, int i, int j) {
+    int data = *(img.data + j * img.step[0] + i);
+    int disR = min(min(abs(data - 156), abs(data - 180)), min(abs(data - 0), abs(data - 10)));
+    int disG = min(abs(data - 33), abs(data - 77));
+    int disB = min(abs(data - 100), abs(data - 124));
+    if (disR < disG && disR < disB)
+        return 1;
+    if (disG < disR && disG < disB)
+        return 2;
+    if (disB < disR && disB < disG)
+        return 3;
+    return 0;
 }
 

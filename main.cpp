@@ -18,6 +18,8 @@ int main(int argc, char **argv) {
     //selfInspection();
 
     VideoCapture capture(-1);
+    capture.set(CAP_PROP_FRAME_HEIGHT, 1280);
+    capture.set(CAP_PROP_FRAME_WIDTH, 720);
     Mat img;
     capture >> img;
     while (1) {

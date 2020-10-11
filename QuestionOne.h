@@ -35,7 +35,7 @@ public:
 
     void getRidOfOthers(cv::Mat img);
 private:
-
+    int calDistance(cv::Mat img, int i, int j);
     Color color;
 };
 

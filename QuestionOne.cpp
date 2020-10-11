@@ -11,6 +11,7 @@ using namespace cv;
 using namespace std;
 
 void QuestionOne::totalSolve(cv::Mat img) {
+    GaussianBlur(img, img, Size(3, 3), 1, 1);
     vector<Mat> hsvImg;
     color = getColor(img, hsvImg);
     //显示文字信息
@@ -33,6 +34,23 @@ void QuestionOne::totalSolve(cv::Mat img) {
     else
         getPureColorImg(hsvImg, binaryImg, 2);
 //    medianBlur(binaryImg, binaryImg, 5);
+
+
+//    erode(binaryImg, binaryImg, getStructuringElement(MORPH_RECT, Size(3, 3)));
+//    dilate(binaryImg, binaryImg, getStructuringElement(MORPH_RECT, Size(5, 5)));
+//    erode(binaryImg, binaryImg, getStructuringElement(MORPH_RECT, Size(2, 2)));
+
+    vector<vector<Point>> contours, approxSet;
+    vector<Vec4i> hierarchy;
+    findContours(binaryImg, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_NONE);
+    drawContours(img, contours, -1, Scalar(0, 0, 255), 1, 8);
+    for (const vector<Point> &cnt:contours) {
+        float epsilon = 0.03f * arcLength(cnt, true);
+        vector<Point> approx;
+        approxPolyDP(cnt, approx, epsilon, true);
+        approxSet.push_back(approx);
+    }
+    drawContours(img, approxSet, -1, Scalar(0, 255, 0), 1, 8);
 
     //getRidOfConor(binaryImg);
     //getRidOfOthers(binaryImg);
@@ -93,7 +111,8 @@ void QuestionOne::getPureColorImg(vector<Mat> &imgIn, cv::Mat &imgOut, int color
             if (*pH <= 10)
                 *pH += 180;
             if (colorLow[colorIndex] <= *pH && *pH <= colorHigh[colorIndex])
-                if (SLow[colorIndex] <= *pS && *pS <= SHigh[colorIndex] && VLow[colorIndex] <= *pV && *pV <= VHigh[colorIndex])
+                if (SLow[colorIndex] <= *pS && *pS <= SHigh[colorIndex] && VLow[colorIndex] <= *pV &&
+                    *pV <= VHigh[colorIndex])
                     *pOut = 255;
                 else
                     *pOut = 0;

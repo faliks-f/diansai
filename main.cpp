@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
                     questionOne.totalSolve(img);
                     break;
             }
-            waitKey(1);
+            waitKey(100);
         }
     }
 

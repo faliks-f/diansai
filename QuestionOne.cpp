@@ -11,7 +11,7 @@ using namespace cv;
 using namespace std;
 
 void QuestionOne::totalSolve(cv::Mat img) {
-    Mat hsvImg(img.rows, img.cols, CV_8U);
+    vector<Mat> hsvImg;
     color = getColor(img, hsvImg);
     //显示文字信息
     Vec3b getColor = img.at<Vec3b>(img.cols / 2, img.rows / 2);
@@ -42,12 +42,12 @@ void QuestionOne::totalSolve(cv::Mat img) {
 
 }
 
-QuestionOne::Color QuestionOne::getColor(cv::Mat img, cv::Mat &out) {
+QuestionOne::Color QuestionOne::getColor(cv::Mat img, vector<Mat> &out) {
     Mat hsvImg;
     cvtColor(img, hsvImg, COLOR_BGR2HSV);
     vector<Mat> hsvSplit;
     split(hsvImg, hsvSplit);
-    out = hsvSplit[0];
+    out = hsvSplit;
     int countR = 0, countG = 0, countB = 0;
     for (int i = img.cols / 2 - 3; i < img.cols / 2 + 4; ++i) {
         for (int j = img.rows / 2 - 3; j < img.rows / 2 + 4; ++j) {
@@ -77,16 +77,28 @@ QuestionOne::Color QuestionOne::getColor(cv::Mat img, cv::Mat &out) {
     return Color::NONE;
 }
 
-void QuestionOne::getPureColorImg(cv::Mat &imgIn, cv::Mat &imgOut, int colorIndex) {
+void QuestionOne::getPureColorImg(vector<Mat> &imgIn, cv::Mat &imgOut, int colorIndex) {
     int colorLow[3] = {156, 50, 98};
-    int colorHigh[3] = {180, 77, 124};
-    for (int i = 0; i < imgIn.cols; ++i) {
-        for (int j = 0; j < imgIn.rows; ++j) {
-            uchar *pIn = imgIn.data + imgIn.step[0] * j + i;
+    int colorHigh[3] = {190, 77, 124};
+    int SLow[3] = {83, 69, 110};
+    int SHigh[3] = {255, 255, 255};
+    int VLow[3] = {105, 115, 51};
+    int VHigh[3] = {255, 255, 255};
+    for (int i = 0; i < imgIn[0].cols; ++i) {
+        for (int j = 0; j < imgIn[0].rows; ++j) {
+            uchar *pH = imgIn[0].data + imgIn[0].step[0] * j + i;
+            uchar *pS = imgIn[1].data + imgIn[1].step[0] * j + i;
+            uchar *pV = imgIn[2].data + imgIn[2].step[0] * j + i;
             uchar *pOut = imgOut.data + imgOut.step[0] * j + i;
-            *pOut = (colorLow[colorIndex] <= *pIn && *pIn <= colorHigh[colorIndex]) ? 255 : 0;
-//            if (colorIndex == 0 && *pOut == 0)
-//                *pOut = (156 < *pIn && *pIn < 180) ? 255 : 0;
+            if (*pH <= 10)
+                *pH += 180;
+            if (colorLow[colorIndex] <= *pH && *pH <= colorHigh[colorIndex])
+                if (SLow[colorIndex] <= *pS && *pS <= SHigh[colorIndex] && VLow[colorIndex] <= *pV && *pV <= VHigh[colorIndex])
+                    *pOut = 255;
+                else
+                    *pOut = 0;
+            else
+                *pOut = 0;
         }
     }
 

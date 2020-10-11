@@ -25,9 +25,9 @@ public:
 
     void totalSolve(cv::Mat img);
 
-    void getPureColorImg(cv::Mat &img, cv::Mat &imgOut, int colorIndex);
+    void getPureColorImg(std::vector<cv::Mat> &img, cv::Mat &imgOut, int colorIndex);
 
-    Color getColor(cv::Mat img, cv::Mat &out);
+    Color getColor(cv::Mat img, std::vector<cv::Mat> &out);
 
     void equalizeColor(cv::Mat img);
 

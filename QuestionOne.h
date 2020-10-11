@@ -27,15 +27,17 @@ public:
 
     void getPureColorImg(cv::Mat &img, cv::Mat &imgOut, int colorIndex);
 
-    Color getColor(cv::Mat img);
+    Color getColor(cv::Mat img, cv::Mat &out);
 
     void equalizeColor(cv::Mat img);
 
     void getRidOfConor(cv::Mat img);
 
     void getRidOfOthers(cv::Mat img);
+
 private:
     int calDistance(cv::Mat img, int i, int j);
+
     Color color;
 };
 

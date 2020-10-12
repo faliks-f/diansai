@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Uart.h"
 #include "QuestionOne.h"
+#include "flowctl.h"
 
 using namespace std;
 using namespace cv;
@@ -12,34 +13,38 @@ void selfInspection();
 int getQuestion();
 
 int main(int argc, char **argv) {
-    //while (!UartOpen()) {
-
-    //}
-    //selfInspection();
-
-    VideoCapture capture(2);
-    capture.set(CAP_PROP_FRAME_HEIGHT, 1280);
-    capture.set(CAP_PROP_FRAME_WIDTH, 720);
-    Mat img;
-    capture >> img;
-    while (1) {
-        //int table = getQuestion();
-        int table = 1;
-        if (table)
-            isStartWork = true;
-        while (isStartWork) {
-            capture >> img;
-            switch (table) {
-                case 1:
-                    QuestionOne questionOne;
-                    questionOne.totalSolve(img);
-                    break;
-            }
-            waitKey(10);
+    for (int i = 0; i < argc; ++i) {
+        if (!strcmp("-g", argv[i]) || !strcmp("--gui", argv[i])) {
+            SHOW_GUI = true;
         }
     }
-
-
+    startupAndLoop();
+//    //while (!UartOpen()) {
+//
+//    //}
+//    //selfInspection();
+//
+//    VideoCapture capture(2);
+//    capture.set(CAP_PROP_FRAME_HEIGHT, 1280);
+//    capture.set(CAP_PROP_FRAME_WIDTH, 720);
+//    Mat img;
+//    capture >> img;
+//    while (1) {
+//        //int table = getQuestion();
+//        int table = 1;
+//        if (table)
+//            isStartWork = true;
+//        while (isStartWork) {
+//            capture >> img;
+//            switch (table) {
+//                case 1:
+//                    QuestionOne questionOne;
+//                    questionOne.totalSolve(img);
+//                    break;
+//            }
+//            waitKey(10);
+//        }
+//    }
     return 0;
 }
 

@@ -2,6 +2,6 @@
 
 #include "math.h"
 
-inline float ab2c(float a, float b) {
-    return sqrt(a * a + b * b);
-}
+typedef unsigned char uchar;
+
+float ab2c(float a, float b);

@@ -7,6 +7,8 @@
 #include "Blob.h"
 #include "algorithm"
 #include "common.h"
+#include "flowctl.h"
+#include "serial_cmd.h"
 
 using namespace cv;
 using namespace std;
@@ -80,7 +82,13 @@ void QuestionOne::totalSolve(cv::Mat img) {
     }
     drawContours(img, approxSet, -1, Scalar(0, 255, 0), 1, 8);
 
-    float phyDistance = 3000;
+    int phyDistance = 3000;
+
+    if (!measureDistanceAndWaitForReply(phyDistance)) {
+        printf("measureDistanceAndWaitForReply return false!!!\n");
+    }
+
+
     const float PHY_SCALE_FACTOR = 3.34;
     const float FXXK_RECT_CORRECT_FACTOR = 1.02;
     const float FXXK_TRI_CORRECT_FACTOR = 1.08;
@@ -121,16 +129,18 @@ void QuestionOne::totalSolve(cv::Mat img) {
                     break;
                 }
             }
-            printf("%s -> s=%.1fmm d=%.1fmm   pixSize=%.2f\n", strshape, phySize, phyDistance, pixSize);
+            printf("%s -> s=%.1fmm d=%dmm pixSize=%.2f\n", strshape, phySize, phyDistance, pixSize);
         }
+        reportFinalResult(shape, (int) phySize, phyDistance);
+        reportEndOfSolution();
     }
 
     //getRidOfConor(binaryImg);
     //getRidOfOthers(binaryImg);
-
-    imshow("original", img);
-    imshow("binary", binaryImg);
-
+    if (SHOW_GUI) {
+        imshow("original", img);
+        imshow("binary", binaryImg);
+    }
 }
 
 QuestionOne::Color QuestionOne::getColor(cv::Mat img, vector<Mat> &out) {
@@ -177,11 +187,11 @@ QuestionOne::Color QuestionOne::getColor(cv::Mat img, vector<Mat> &out) {
 }
 
 void QuestionOne::getPureColorImg(vector<Mat> &imgIn, cv::Mat &imgOut, int colorIndex) {
-    int colorLow[3] = {156, 50, 98};
+    int colorLow[3] = {156, 39, 98};
     int colorHigh[3] = {190, 77, 124};
-    int SLow[3] = {83, 69, 110};
+    int SLow[3] = {83, 86, 110};
     int SHigh[3] = {255, 255, 255};
-    int VLow[3] = {83, 80, 51};
+    int VLow[3] = {83, 51, 51};
     int VHigh[3] = {255, 255, 255};
     for (int i = 0; i < imgIn[0].cols; ++i) {
         for (int j = 0; j < imgIn[0].rows; ++j) {

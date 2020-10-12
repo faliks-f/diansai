@@ -8,7 +8,7 @@ bool measureDistanceAndWaitForReply(int &distanceMM);
 
 bool sendPacket5(uchar cmd, uchar arg1, uchar arg2, int maxTry);
 
-bool reportFinalResult(int shape, int size, int distance);
+bool reportFinalResult(int shape, int size, int distance, int color);
 
 bool reportEndOfSolution();
 

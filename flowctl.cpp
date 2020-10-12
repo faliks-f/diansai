@@ -102,6 +102,10 @@ int startupInitInternal() {
 uchar cmdbuf[256];
 int cmdbuf_start = 0, cmdbuf_len = 0;
 
+void dropPendingRxPacket() {
+    cmdbuf_len = cmdbuf_start = 0;
+}
+
 bool nextBasicPacketAsync(BasicPacket &pk) {
     //check buffer
     if (cmdbuf_len < 32 && (256 - cmdbuf_start - cmdbuf_len < 64)) {
@@ -129,7 +133,7 @@ bool nextBasicPacketAsync(BasicPacket &pk) {
         cmdbuf_start += 5;
         if (((uchar) pk[1]) == ((uchar) (~pk[4]))) {
             return true;
-        } else {
+        } else if (pk[1] != 0) {
             uchar tmp5[5] = {0x75, 0x00, 0xFF, 0x00, (uchar) ~0x00u};
             write(serialFd, tmp5, 5);
             return false;
@@ -165,7 +169,7 @@ bool next8bytePacketAsync(BasicPacket &pk) {
         cmdbuf_start += 8;
         if (((uchar) pk[1]) == ((uchar) (~pk[7]))) {
             return true;
-        } else {
+        } else if (pk[1] != 0) {
             uchar tmp5[5] = {0x75, 0x00, 0x00, 0x00, (uchar) ~0x00u};
             write(serialFd, tmp5, 5);
             return false;

@@ -28,15 +28,20 @@ void QuestionOne::totalSolve(cv::Mat img) {
         return;
     }
 
+    int iColor = 0;
     //blur(img, img, Size(7, 7));
     //二值化
     Mat binaryImg = Mat(img.rows, img.cols, CV_8U);
-    if (color == Color::RED)
+    if (color == Color::RED) {
+        iColor = 1;
         getPureColorImg(hsvImg, binaryImg, 0);
-    else if (color == Color::GREEN)
+    } else if (color == Color::GREEN) {
+        iColor = 2;
         getPureColorImg(hsvImg, binaryImg, 1);
-    else
+    } else {
+        iColor = 3;
         getPureColorImg(hsvImg, binaryImg, 2);
+    }
 //    medianBlur(binaryImg, binaryImg, 5);
 
 
@@ -131,7 +136,7 @@ void QuestionOne::totalSolve(cv::Mat img) {
             }
             printf("%s -> s=%.1fmm d=%dmm pixSize=%.2f\n", strshape, phySize, phyDistance, pixSize);
         }
-        reportFinalResult(shape, (int) phySize, phyDistance);
+        reportFinalResult(shape, (int) phySize, phyDistance, iColor);
         reportEndOfSolution();
     }
 

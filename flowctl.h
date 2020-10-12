@@ -21,6 +21,8 @@ void startupAndLoop();
 
 void msleep(int ms);
 
+void dropPendingRxPacket();
+
 bool nextBasicPacketAsync(BasicPacket &pk);
 
 bool next8bytePacketAsync(BasicPacket &pk);

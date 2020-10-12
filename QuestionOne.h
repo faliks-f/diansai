@@ -41,5 +41,6 @@ private:
     Color color;
 };
 
+void findWhiteBackground(std::vector<cv::Mat> &hsvIn, cv::Mat &binOut);
 
 #endif //BALLCTLUPPERTEST_QUESTIONONE_H

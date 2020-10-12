@@ -6,9 +6,11 @@
 #include "iostream"
 #include "Blob.h"
 #include "algorithm"
+#include "common.h"
 
 using namespace cv;
 using namespace std;
+
 
 void QuestionOne::totalSolve(cv::Mat img) {
     GaussianBlur(img, img, Size(3, 3), 1, 1);
@@ -40,17 +42,88 @@ void QuestionOne::totalSolve(cv::Mat img) {
 //    dilate(binaryImg, binaryImg, getStructuringElement(MORPH_RECT, Size(5, 5)));
 //    erode(binaryImg, binaryImg, getStructuringElement(MORPH_RECT, Size(2, 2)));
 
+
+
+
     vector<vector<Point>> contours, approxSet;
     vector<Vec4i> hierarchy;
+    //begin bg
+
+
+    //begin shape
     findContours(binaryImg, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_NONE);
     drawContours(img, contours, -1, Scalar(0, 0, 255), 1, 8);
+
+    float minDistance = 114514;
+    vector<Point> bestApprox;
+    vector<Point> bestRawContour;
     for (const vector<Point> &cnt:contours) {
         float epsilon = 0.03f * arcLength(cnt, true);
+        if (arcLength(cnt, true) < 16)continue;
         vector<Point> approx;
         approxPolyDP(cnt, approx, epsilon, true);
         approxSet.push_back(approx);
+        Mat tmp(cnt);
+        Moments moment = moments(tmp, false);
+        //除数不能为0
+        if (moment.m00 != 0) {
+            int x = cvRound(moment.m10 / moment.m00);//计算重心横坐标
+            int y = cvRound(moment.m01 / moment.m00);//计算重心纵坐标
+            float dist = ab2c(x - img.cols / 2, y - img.rows / 2);
+            if (minDistance > dist) {
+                bestApprox = approx;
+                bestRawContour = cnt;
+                minDistance = dist;
+            }
+        }
+
     }
     drawContours(img, approxSet, -1, Scalar(0, 255, 0), 1, 8);
+
+    float phyDistance = 3000;
+    const float PHY_SCALE_FACTOR = 3.34;
+    const float FXXK_RECT_CORRECT_FACTOR = 1.02;
+    const float FXXK_TRI_CORRECT_FACTOR = 1.08;
+
+    if (!bestApprox.empty()) {
+        float pixSize = 0;
+        int shape = 0;
+        if (bestApprox.size() > 7) {
+            //circle
+            shape = 1;
+            pixSize = (float) (arcLength(bestRawContour, true) / CV_PI);
+        } else {
+            if (bestApprox.size() == 3 || bestApprox.size() == 5) {
+                //tri
+                shape = 2;
+                pixSize = (float) (FXXK_TRI_CORRECT_FACTOR * arcLength(bestApprox, true) / 3);
+            } else {
+                //rect
+                shape = 3;
+                pixSize = (float) (FXXK_RECT_CORRECT_FACTOR * arcLength(bestApprox, true) / 4);
+            }
+        }
+
+        float phySize = pixSize * PHY_SCALE_FACTOR;
+        {
+            const char *strshape = "Unknown";
+            switch (shape) {
+                case 1: {
+                    strshape = "Circle";
+                    break;
+                }
+                case 2: {
+                    strshape = "Triangle";
+                    break;
+                }
+                case 3: {
+                    strshape = "Rect";
+                    break;
+                }
+            }
+            printf("%s -> s=%.1fmm d=%.1fmm   pixSize=%.2f\n", strshape, phySize, phyDistance, pixSize);
+        }
+    }
 
     //getRidOfConor(binaryImg);
     //getRidOfOthers(binaryImg);
@@ -67,31 +140,39 @@ QuestionOne::Color QuestionOne::getColor(cv::Mat img, vector<Mat> &out) {
     split(hsvImg, hsvSplit);
     out = hsvSplit;
     int countR = 0, countG = 0, countB = 0;
-    for (int i = img.cols / 2 - 3; i < img.cols / 2 + 4; ++i) {
-        for (int j = img.rows / 2 - 3; j < img.rows / 2 + 4; ++j) {
+    for (int i = img.cols / 4; i < img.cols * 3 / 4; i += (img.cols / 4 / 5)) {
+        for (int j = img.rows / 4; j < img.rows * 3 / 4; j += (img.rows / 4 / 5)) {
+            int br = 0xFF & *(hsvSplit[1].data + j * hsvSplit[1].step[0] + i);
+            br = br * br;
             switch (calDistance(hsvSplit[0], i, j)) {
                 case 1:
-                    ++countR;
-                    cout << "R" << " ";
+                    countR += br;
+//                    cout << "R" << " ";
                     break;
                 case 2:
-                    ++countG;
-                    cout << "G" << " ";
+                    countG += br;
+//                    cout << "G" << " ";
                     break;
                 case 3:
-                    ++countB;
-                    cout << "B" << " ";
+                    countB += br;
+//                    cout << "B" << " ";
                     break;
             }
-            cout << (int) hsvSplit[0].at<uchar>(i, j) << endl;
         }
     }
-    if (countR > countG && countR > countB)
+//    cout << countR << " " << countG << " " << countB << " ";
+    if (countR > countG && countR > countB) {
+//        cout << "R" << endl;
         return Color::RED;
-    if (countG > countR && countG > countB)
+    }
+    if (countG > countR && countG > countB) {
+//        cout << "G" << endl;
         return Color::GREEN;
-    if (countB > countG && countB > countR)
+    }
+    if (countB > countG && countB > countR) {
+//        cout << "B" << endl;
         return Color::BLUE;
+    }
     return Color::NONE;
 }
 
@@ -100,7 +181,7 @@ void QuestionOne::getPureColorImg(vector<Mat> &imgIn, cv::Mat &imgOut, int color
     int colorHigh[3] = {190, 77, 124};
     int SLow[3] = {83, 69, 110};
     int SHigh[3] = {255, 255, 255};
-    int VLow[3] = {105, 115, 51};
+    int VLow[3] = {83, 80, 51};
     int VHigh[3] = {255, 255, 255};
     for (int i = 0; i < imgIn[0].cols; ++i) {
         for (int j = 0; j < imgIn[0].rows; ++j) {
@@ -166,3 +247,18 @@ int QuestionOne::calDistance(cv::Mat img, int i, int j) {
     return 0;
 }
 
+void findWhiteBackground(vector<cv::Mat> &hsvIn, cv::Mat &binOut) {
+    for (int i = 0; i < hsvIn[0].cols; ++i) {
+        for (int j = 0; j < hsvIn[0].rows; ++j) {
+            //uchar *pH = hsvIn[0].data + hsvIn[0].step[0] * j + i;
+            uchar *pS = hsvIn[1].data + hsvIn[1].step[0] * j + i;
+            uchar *pV = hsvIn[2].data + hsvIn[2].step[0] * j + i;
+            uchar *pOut = binOut.data + binOut.step[0] * j + i;
+            if (*pS + *pV < 255 && *pV > 128) {
+                *pOut = 255;
+            } else {
+                *pOut = 0;
+            }
+        }
+    }
+}

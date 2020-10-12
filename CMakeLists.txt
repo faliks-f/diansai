@@ -4,7 +4,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # define variables
 # set(var value)
-set(SOURCE_FILES main.cpp QuestionOne.cpp QuestionOne.h Uart.cpp Uart.h Blob.cpp Blob.h)
+set(SOURCE_FILES main.cpp QuestionOne.cpp QuestionOne.h Uart.cpp Uart.h Blob.cpp Blob.h flowctl.cpp)
 #set(OPENCV "/usr/local/lib") # 引号应该可以使得空格取消分割的作用
 # opencv的所有lib
 # opencv的所有lib

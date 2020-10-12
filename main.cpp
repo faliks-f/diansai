@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     //}
     //selfInspection();
 
-    VideoCapture capture(-1);
+    VideoCapture capture(2);
     capture.set(CAP_PROP_FRAME_HEIGHT, 1280);
     capture.set(CAP_PROP_FRAME_WIDTH, 720);
     Mat img;
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
                     questionOne.totalSolve(img);
                     break;
             }
-            waitKey(100);
+            waitKey(10);
         }
     }
 

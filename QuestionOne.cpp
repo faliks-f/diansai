@@ -94,7 +94,7 @@ void QuestionOne::totalSolve(cv::Mat img) {
     }
 
 
-    const float PHY_SCALE_FACTOR = 3.34;
+    const float PHY_SCALE_FACTOR = 3.34 / 3000.0;
     const float FXXK_RECT_CORRECT_FACTOR = 1.02;
     const float FXXK_TRI_CORRECT_FACTOR = 1.08;
 
@@ -117,7 +117,7 @@ void QuestionOne::totalSolve(cv::Mat img) {
             }
         }
 
-        float phySize = pixSize * PHY_SCALE_FACTOR;
+        float phySize = pixSize * PHY_SCALE_FACTOR * (float) phyDistance;
         {
             const char *strshape = "Unknown";
             switch (shape) {

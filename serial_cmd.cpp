@@ -45,6 +45,7 @@ bool measureDistanceAndWaitForReply(int &distanceMM) {
     sendPacket5(0x09, 0x02, 0, 3);
     if (d != 0) {
         distanceMM = d * 10;
+        return true;
     }
     return false;
 }

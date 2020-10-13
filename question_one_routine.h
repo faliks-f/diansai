@@ -1,3 +1,2 @@
 
-
-void executeQuestionOne() ;
+void executeQuestionOne();

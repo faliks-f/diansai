@@ -2,6 +2,8 @@
 
 void moveCamera(int dX, int dY);
 
+bool setCameraYaw(int yaw);
+
 bool setLaserPowerOn(bool on);
 
 bool measureDistanceAndWaitForReply(int &distanceMM);

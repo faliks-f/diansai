@@ -8,10 +8,17 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/videoio.hpp"
 #include "question_one_routine.h"
+#include "question_three_routine.h"
 #include "common.h"
 #include "QuestionOne.h"
 
 #define BIT_RATE B115200
+
+//#define ALLOW_RUN_WITHOUT_USART true
+
+#if ALLOW_RUN_WITHOUT_USART
+#warning ALLOW_RUN_WITHOUT_USART is set!!!
+#endif
 
 #define SERIAL_DEV "/dev/ttyUSB0"
 //#define SERIAL_DEV "/dev/ttyS0"
@@ -25,6 +32,7 @@ const uchar REPLY_GENERAL_OK[5] = {0x75, 0x00, 0x00, 0x00, static_cast<uchar>(~0
 using namespace cv;
 
 int startupInitInternal() {
+#ifndef ALLOW_RUN_WITHOUT_USART
     //open port
     serialFd = open(SERIAL_DEV, O_RDWR | O_NOCTTY | O_NONBLOCK);
     //O_NONBLOCK设置为非阻塞模式，在read时不会阻塞住，在读的时候将read放在while循环中，下一节篇文档将详细讲解阻塞和非阻塞
@@ -81,6 +89,7 @@ int startupInitInternal() {
         return -1;
     }
     printf("Serial port " SERIAL_DEV " set done!\n");
+#endif
     //open video
     videoIn = VideoCapture(VIDEO_CAP_INDEX);
     if (!videoIn.isOpened()) {
@@ -114,7 +123,7 @@ bool nextBasicPacketAsync(BasicPacket &pk) {
         cmdbuf_start = 0;
     }
     int rl = read(serialFd, cmdbuf + cmdbuf_start, 256 - cmdbuf_start - cmdbuf_len);
-    if (rl != 0) {
+    if (rl > 0) {
         for (int i = 0; i < rl; i++) {
             printf("%02x, ", cmdbuf[(cmdbuf_start + i) % 256]);
         }
@@ -150,7 +159,7 @@ bool next8bytePacketAsync(BasicPacket &pk) {
         cmdbuf_start = 0;
     }
     int rl = read(serialFd, cmdbuf + cmdbuf_start, 256 - cmdbuf_start - cmdbuf_len);
-    if (rl != 0) {
+    if (rl > 0) {
         for (int i = 0; i < rl; i++) {
             printf("%02x, ", cmdbuf[(cmdbuf_start + i) % 256]);
         }
@@ -251,6 +260,10 @@ void doHandleQuestion(int qid) {
             executeQuestionOne();
             break;
         }
+        case 3: {
+            executeQuestionThree();
+            break;
+        }
         default: {
             printf("doHandleQuestion: unknown id %d\n", qid);
         }
@@ -274,10 +287,11 @@ void startupAndLoop() {
         BasicPacket pk;
         bool hasRecv;
         if (!(hasRecv = nextBasicPacketAsync(pk))) {
-            msleep(200);
+            msleep(100);
         }
         if (SHOW_GUI) {
             videoIn >> cameraPreview;
+            flip(cameraPreview, cameraPreview, -1);
             drawDemo(cameraPreview);
             circle(cameraPreview, Point(cameraPreview.cols / 2, cameraPreview.rows / 2), 2, Scalar(0, 0, 0), -1);
             imshow("prev", cameraPreview);

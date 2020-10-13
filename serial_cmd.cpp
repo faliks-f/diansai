@@ -3,7 +3,26 @@
 #include "flowctl.h"
 
 void moveCamera(int dX, int dY) {
-    printf("moveCamera: Stub\n");
+    uchar argX = 0, argY = 0;
+    if (dX != 0) {
+        argX = dX < 0 ? 2 : 1;
+    }
+    if (dY != 0) {
+        argY = dY < 0 ? 2 : 1;
+    }
+    printf("moveCamera: %d,%d\n", dX, dY);
+    sendPacket5(4, argX, argY, -1);
+}
+
+bool setCameraYaw(int yaw) {
+    printf("setCameraYaw: %d - ", yaw);
+    if (yaw < -30)yaw = -30;
+    if (yaw > 30)yaw = 30;
+    yaw += 30;
+    uchar aa = yaw;
+    bool ret = sendPacket5(0x10, aa, (uchar) ~aa, 3);
+    printf(ret ? "success\n" : "failed\n");
+    return ret;
 }
 
 bool setLaserPowerOn(bool on) {
@@ -22,7 +41,7 @@ bool measureDistanceAndWaitForReply(int &distanceMM) {
     }
     std::vector<int> distArr;
     BasicPacket pk = {};
-    for (int i = 20; i > 0; --i) {
+    for (int i = 8; i > 0; --i) {
         msleep(250);
         if (nextBasicPacketAsync(pk)) {
             if (pk[1] == 0x0A) {

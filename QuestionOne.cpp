@@ -66,7 +66,7 @@ void QuestionOne::totalSolve(cv::Mat img) {
     vector<Point> bestRawContour;
     for (const vector<Point> &cnt:contours) {
         float epsilon = 0.03f * arcLength(cnt, true);
-        if (arcLength(cnt, true) < 16)continue;
+        if (arcLength(cnt, true) < 64)continue;
         vector<Point> approx;
         approxPolyDP(cnt, approx, epsilon, true);
         approxSet.push_back(approx);
@@ -94,9 +94,9 @@ void QuestionOne::totalSolve(cv::Mat img) {
     }
 
 
-    const float PHY_SCALE_FACTOR = 3.34 / 3000.0;
-    const float FXXK_RECT_CORRECT_FACTOR = 1.02;
-    const float FXXK_TRI_CORRECT_FACTOR = 1.08;
+    const float PHY_SCALE_FACTOR = 0.001150;
+    const float FXXK_RECT_CORRECT_FACTOR = 1.09;
+    const float FXXK_TRI_CORRECT_FACTOR = 1.100;
 
     if (!bestApprox.empty()) {
         float pixSize = 0;
@@ -122,7 +122,7 @@ void QuestionOne::totalSolve(cv::Mat img) {
             const char *strshape = "Unknown";
             switch (shape) {
                 case 1: {
-                    strshape = "Circle";
+                    strshape = "Round";
                     break;
                 }
                 case 2: {

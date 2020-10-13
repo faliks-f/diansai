@@ -15,6 +15,7 @@ using namespace std;
 
 
 void QuestionOne::totalSolve(cv::Mat img) {
+    setLaserPowerOn(false);
     GaussianBlur(img, img, Size(3, 3), 1, 1);
     vector<Mat> hsvImg;
     color = getColor(img, hsvImg);
@@ -87,12 +88,11 @@ void QuestionOne::totalSolve(cv::Mat img) {
     }
     drawContours(img, approxSet, -1, Scalar(0, 255, 0), 1, 8);
 
-    int phyDistance = 3000;
+    int phyDistance = 2600;
 
     if (!measureDistanceAndWaitForReply(phyDistance)) {
         printf("measureDistanceAndWaitForReply return false!!!\n");
     }
-
 
     const float PHY_SCALE_FACTOR = 0.001150;
     const float FXXK_RECT_CORRECT_FACTOR = 1.09;

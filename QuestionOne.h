@@ -25,9 +25,9 @@ public:
 
     void totalSolve(cv::Mat img);
 
-    void getPureColorImg(std::vector<cv::Mat> &img, cv::Mat &imgOut, int colorIndex);
+    static void getPureColorImg(std::vector<cv::Mat> &img, cv::Mat &imgOut, int colorIndex);
 
-    Color getColor(cv::Mat img, std::vector<cv::Mat> &out);
+    static Color getColor(cv::Mat img, std::vector<cv::Mat> &out);
 
     void equalizeColor(cv::Mat img);
 
@@ -36,7 +36,7 @@ public:
     void getRidOfOthers(cv::Mat img);
 
 private:
-    int calDistance(cv::Mat img, int i, int j);
+    static int calDistance(cv::Mat img, int i, int j);
 
     Color color;
 };

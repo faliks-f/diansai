@@ -42,7 +42,7 @@ bool measureDistanceAndWaitForReply(int &distanceMM) {
     std::vector<int> distArr;
     BasicPacket pk = {};
     for (int i = 8; i > 0; --i) {
-        msleep(250);
+        msleep(100);
         if (nextBasicPacketAsync(pk)) {
             if (pk[1] == 0x0A) {
                 uchar hi = pk[2];
@@ -77,7 +77,7 @@ bool sendPacket5(uchar cmd, uchar arg1, uchar arg2, int maxTry) {
     } else {
         do {
             write(serialFd, tmp5, 5);
-            msleep(500);
+            msleep(200);
             BasicPacket pk = {};
             if (nextBasicPacketAsync(pk)) {
                 if (pk[1] == 0) {
